@@ -1,19 +1,25 @@
 import random
+import time
+
+infinity = float('inf')
 
 
-def brute_force_maximum_subarray(arr: list) -> (int, int, float):
-    n = len(arr)
+def brute_force_maximum_subarray(arr: list, low: int = None, high: int = None) -> (int, int, float):
+    low = 0 if low is None else low
+    high = len(arr)-1 if high is None else high
+
+    n = high - low + 1
 
     if n <= 1:
-        return 0, 0, arr[0] if n == 0 else 0
+        return low, high, arr[low] if n == 1 else 0
 
-    max_sum = arr[0]
-    max_i = 0
-    max_j = 0
+    max_sum = -infinity
+    max_i = low
+    max_j = low
 
-    for i in range(n):
+    for i in range(low, high + 1):
         current_sum = 0
-        for j in range(i, n):
+        for j in range(i, high + 1):
             current_sum += arr[j]
             if current_sum > max_sum:
                 max_sum = current_sum
@@ -22,7 +28,6 @@ def brute_force_maximum_subarray(arr: list) -> (int, int, float):
 
 
 def divide_and_conquer_subarray(arr: list) -> (int, int, float):
-    infinity = float('inf')
 
     def cross_max_subarray(low: int, high: int, mid: int) -> (int, int, float):
         left_low = low
@@ -47,8 +52,8 @@ def divide_and_conquer_subarray(arr: list) -> (int, int, float):
         return left_low, right_high, left_max_sum + right_max_sum
 
     def r(low: int, high: int) -> (int, int, float):
-        if low == high:
-            return low, high, arr[low]
+        if high - low < 40:
+            return brute_force_maximum_subarray(arr, low, high)
         mid = (low + high) // 2
 
         left_low, left_high, left_sum = r(low, mid)
@@ -65,14 +70,18 @@ def divide_and_conquer_subarray(arr: list) -> (int, int, float):
     return r(0, len(arr)-1)
 
 
-n = 10000
+array_length = 10
 
-test_array = [random.randint(-100, 100) for _ in range(n)]
+test_array = [random.randint(-100, 100) for _ in range(array_length)]
 
-ans2 = divide_and_conquer_subarray(test_array)
-print(ans2)
+start1 = time.time()
+ans1 = divide_and_conquer_subarray(test_array)
+end1 = time.time()
+print(ans1, end1 - start1)
 
-ans1 = brute_force_maximum_subarray(test_array)
-print(ans1)
+start2 = time.time()
+ans2 = brute_force_maximum_subarray(test_array)
+end2 = time.time()
+print(ans2, end2 - start2)
 
 print(ans1 == ans2)
