@@ -13,7 +13,7 @@ def linear_time_maximum_subarray(arr: list) -> (int, int, float):
     max_i = 0
 
     for j in range(1, n):
-        if suffix_max_sum + arr[j] < arr[j]:
+        if suffix_max_sum < 0:
             suffix_max_sum = arr[j]
             suffix_i = j
         else:
