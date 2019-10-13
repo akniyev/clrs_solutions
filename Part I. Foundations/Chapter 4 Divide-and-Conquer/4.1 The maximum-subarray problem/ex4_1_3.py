@@ -70,18 +70,19 @@ def divide_and_conquer_subarray(arr: list) -> (int, int, float):
     return r(0, len(arr)-1)
 
 
-array_length = 10
+if __name__ == "__main__":
+    array_length = 10
 
-test_array = [random.randint(-100, 100) for _ in range(array_length)]
+    test_array = [random.randint(-100, 100) for _ in range(array_length)]
 
-start1 = time.time()
-ans1 = divide_and_conquer_subarray(test_array)
-end1 = time.time()
-print(ans1, end1 - start1)
+    start1 = time.time()
+    ans1 = divide_and_conquer_subarray(test_array)
+    end1 = time.time()
+    print(ans1, end1 - start1)
 
-start2 = time.time()
-ans2 = brute_force_maximum_subarray(test_array)
-end2 = time.time()
-print(ans2, end2 - start2)
+    start2 = time.time()
+    ans2 = brute_force_maximum_subarray(test_array)
+    end2 = time.time()
+    print(ans2, end2 - start2)
 
-print(ans1 == ans2)
+    print(ans1 == ans2)
