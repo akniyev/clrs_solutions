@@ -44,5 +44,5 @@ if __name__ == "__main__":
     ans2 = linear_time_maximum_subarray(test_array)
     end2 = time.time()
     print(ans2, end2 - start2)
-
+    
     print(ans1 == ans2)
